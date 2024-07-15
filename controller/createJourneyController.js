@@ -29,15 +29,18 @@ export const createJourneyController = async (req, res) => {
       passengerId,
       createdAt: { $gte: startOfDay, $lte: endOfDay },
     }).sort({ createdAt: 1 });
-    // const lastJourneyToday = await Journey.findOne({
-    //     passengerId,
-    //     createdAt: { $gte: startOfDay, $lte: endOfDay },
-    //   }).sort({ createdAt: -1 });
+    const lasJourney = await Journey.findOne({
+        passengerId,
+        createdAt: { $gte: startOfDay, $lte: endOfDay },
+      }).sort({ createdAt: -1 });
+
+
 
     const isReturnJourney =
       firstJourneyToday &&
       firstJourneyToday.from === to &&
-      firstJourneyToday.to === from;
+      lasJourney.from !== from;
+      // firstJourneyToday.to === from;
     const lastCharge = isReturnJourney ? charge * 0.5 : charge;
     const discount = isReturnJourney ? charge * 0.5 : 0;
     let response;

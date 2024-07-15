@@ -2,8 +2,8 @@ import { ZeroCards } from "../Model/cardSchema.js";
 
 export const ZeroCardRechargeController=async(req,res)=>{
     try {
-        const {ZeroCardNumber,rechargeAmount}=req.body;
-        const response=await ZeroCards.updateOne({cardNumber:ZeroCardNumber},{$inc:{balance:rechargeAmount}})
+        const {ZeroCardNumber,rechargeAmount,serviceCharge}=req.body;
+        const response=await ZeroCards.updateOne({cardNumber:ZeroCardNumber},{$inc:{balance:rechargeAmount,serviceChargeCollected:serviceCharge}})
         const updatedCard = await ZeroCards.findOne({cardNumber:ZeroCardNumber})
         if(response.modifiedCount==1){
             return res.status(200).json({updatedCard,message:'Recharge Successfull'})

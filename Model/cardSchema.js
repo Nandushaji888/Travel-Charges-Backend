@@ -15,6 +15,10 @@ const zeroCardSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Passenger',
         required:true
+    },
+    serviceChargeCollected:{
+        type:Number,
+        default:0
     }
 })
 
